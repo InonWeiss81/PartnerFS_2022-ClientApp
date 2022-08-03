@@ -3,7 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  EndPointBaseUrl: 'https://localhost:44393/',
+  EndPointControllerRoute: 'api/customers/',
+  EndPointGetCustomerDataRoute: 'getCustomerData',
+  EndPointUpdateCustomerAddressRoute: 'updateCustomerAddress'
 };
 
 /*

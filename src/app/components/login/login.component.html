@@ -1,0 +1,29 @@
+<div class="container">
+    <div id="login-container">
+        <div id="form-container">
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <div class="form-control-wrapper">
+                    <input class="form-control" id="id-number" type="text" formControlName="idNumber"
+                        [placeholder]="idNumberPH">
+                    <div *ngIf="loginForm.invalid && (loginForm.dirty || loginForm.touched)" class="my-alert">
+                        <div *ngIf="loginForm.get('idNumber')?.errors?.['required']">
+                            שדה חובה
+                        </div>
+                        <div *ngIf="loginForm.get('idNumber')?.errors?.['pattern']">
+                            ספרות בלבד
+                        </div>
+                        <div *ngIf="loginForm.get('idNumber')?.errors?.['invalidIdNumber']">
+                            מספר אינו תקין
+                        </div>
+                        <div *ngIf="loginForm.get('idNumber')?.errors?.['maxLengthExceeded']">
+                            מספר ת.ז. אינו יכול להיות מעל 9 ספרות
+                        </div>
+                    </div>
+                </div>
+                <div class="btn-wrapper">
+                    <button class="btn btn-primary my-btn" type="submit" [disabled]="!loginForm.valid">התחבר</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
