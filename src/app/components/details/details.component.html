@@ -1,1 +1,112 @@
-{{ idNumber }}
+<div class="container">
+    <div id="details-container">
+        <h2>פרטי לקוח</h2>
+        <a href="#" routerLink="login">החלף לקוח</a>
+        <div id="customer-details">
+            <div id="general-details" class="details-section">
+                <h5>פרטים כלליים</h5>
+                <hr>
+                <div class="details-subsection">
+                    <span>
+                        <b>שם: </b>
+                        {{ customer?.FirstName + ' ' + customer?.LastName }}
+                    </span>
+                    <span>
+                        <b>ת.ז: </b>
+                        {{ customer?.IdNumber }}
+                    </span>
+                </div>
+            </div>
+            <div id="address-details" class="details-section">
+                <div class="header-wrapper">
+                    <h5>
+                        כתובת
+                    </h5>
+                    <img src="../../../assets/images/edit.png" alt="עריכה" height="20" title="עריכה" (click)="openAddressModal()">
+                </div>
+
+                
+                <hr>
+                <div class="details-subsection">
+                    <span>
+                        <b>עיר: </b>
+                        {{ customer?.Address?.City }}
+                    </span>
+                    <span>
+                        <b>רחוב: </b>
+                        {{ customer?.Address?.Street }}
+                    </span>
+                    <span>
+                        <b>מספר בית: </b>
+                        {{ customer?.Address?.Number }}
+                    </span>
+                    <span>
+                        <b>מיקוד: </b>
+                        {{ customer?.Address?.ZipCode }}
+                    </span>
+                </div>
+            </div>
+            <div id="contract-list" class="details-section">
+                <h5>רשימת מנויים</h5>
+                <hr>
+                <div class="details-subsection">
+                    <div *ngIf="customer?.ContractList && customer?.ContractList!.length > 0 else noContracts">
+                        <b>
+                            נמצאו
+                            {{ customer?.ContractList!.length }}
+                            מנויים:
+                        </b>
+                        <br>
+                        <div *ngFor="let contract of customer?.ContractList; let i = index"
+                            class="customer-contract-name">
+                            <span class="clickable" [ngClass]="{'bold': selectedContract === contract}"
+                                (click)="selectContract(contract)">{{ contract?.ContractName }}</span>
+                            <span>{{ i < customer?.ContractList!.length - 1 ? ', ' : '' }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="contract-details">
+            <div id="selected-contract-details">
+                <h5>פרטי מנוי שנבחר</h5>
+                <hr>
+                <div class="details-subsection">
+                    <div *ngIf="selectedContract else noSelectedContract" class="selected-contract-details-wrapper">
+                        <div>
+                            <span>
+                                <b>שם: </b>
+                                {{ selectedContract.ContractName }}
+                            </span>
+                            <span>
+                                <b>ת.ז: </b>
+                                {{ selectedContract.ContractId }}
+                            </span>
+                        </div>
+                        <div class="contract-package-list">
+                            <b>
+                                רשימת חבילות:
+                            </b>
+                            <div *ngFor="let package of selectedContract.PackagesList; let i = index"
+                                class="contract-package">
+                                <span class="hoverable"
+                                    ngbPopover="יתרה: {{ package.PackageBalance }} {{ getPackageUnits(package.PackageType) }}"
+                                    triggers="mouseenter:mouseleave" popoverTitle="{{ package.PackageName }}"
+                                    placement="bottom">{{ package.PackageName }}</span>
+                                <span>{{ i < selectedContract.PackagesList.length - 1 ? ', ' : '' }} </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #noContracts>
+    <span>ללקוח זה אין מנויים</span>
+</ng-template>
+
+<ng-template #noSelectedContract>
+    <span>אנא בחר מנוי מרשימת המנויים</span>
+</ng-template>

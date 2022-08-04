@@ -1,0 +1,38 @@
+.modal-container {
+    direction: rtl;
+
+    .modal-header {
+        .btn-close {
+            margin: calc(var(--bs-modal-header-padding-y) * -0.5) auto calc(var(--bs-modal-header-padding-y) * -0.5) calc(var(--bs-modal-header-padding-x) * -0.5);
+            ;
+        }
+    }
+
+    .modal-body {
+        form {
+            display: flex;
+            flex-direction: column;
+
+
+            &>div {
+                display: flex;
+                align-items: center;
+                margin: 10px 0;
+
+                label {
+                    flex: 0.3;
+                }
+
+                div {
+                    flex: 0.4;
+                    text-align: center;
+                }
+            }
+
+            .my-alert {
+                color: #b81c29;
+                text-align: center;
+            }
+        }
+    }
+}

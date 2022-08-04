@@ -1,24 +1,31 @@
-import { HttpClient, HttpHeaders, HttpStatusCode } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { BehaviorSubject } from "rxjs";
+import { Customer } from "src/app/models/Customer";
+import { ServerApiResponse } from "src/app/models/serverApiResponse";
 import { environment } from "src/environments/environment";
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class LoginService {
+
+    customerDetails: BehaviorSubject<Customer | string> = new BehaviorSubject<Customer | string>('');
 
     getCustomerDetails(idNumber: string) {
         let url = environment.EndPointBaseUrl + environment.EndPointControllerRoute + environment.EndPointGetCustomerDataRoute;
-        this.http.post<LoginApiResponse>(url, idNumber, { responseType: 'json', headers: { 'content-Type': 'application/json' } }).subscribe(
+        this.http.post<ServerApiResponse>(url, idNumber, { responseType: 'json', headers: { 'content-Type': 'application/json' } }).subscribe(
             data => {
-                console.log(data);
+                if (data.IsError) {
+                    this.customerDetails.next(data.Message);
+                }
+                else {
+                    let customer = JSON.parse(data.Message) as Customer;
+                    this.customerDetails.next(customer);
+                }
             }
         );
     }
 
+
     constructor(private http: HttpClient) { }
 }
 
-interface LoginApiResponse {
-    StatusCode: HttpStatusCode;
-    IsError: boolean;
-    Message: string;
-}

@@ -1,0 +1,51 @@
+<div class="modal-container">
+    <div class="modal-header">
+        <h4 class="modal-title">עדכון כתובת</h4>
+        <button type="button" class="btn-close" aria-label="Close"
+            (click)="activeModal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="addressForm">
+            <div>
+                <label for="city">עיר: </label>
+                <input id="city" type="text" formControlName="City">
+                <div *ngIf="addressForm.invalid && (addressForm.dirty || addressForm.touched) && addressForm.get('City')?.errors?.['required']"
+                    class="my-alert">
+                    שדה חובה
+                </div>
+            </div>
+            <div>
+                <label for="street">רחוב: </label>
+                <input id="street" type="text" formControlName="Street">
+                <div *ngIf="addressForm.invalid && (addressForm.dirty || addressForm.touched) && addressForm.get('Street')?.errors?.['required']"
+                    class="my-alert">
+                    שדה חובה
+                </div>
+            </div>
+            <div>
+                <label for="number">מספר בית: </label>
+                <input id="number" type="number" formControlName="Number">
+                <div *ngIf="addressForm.invalid && (addressForm.dirty || addressForm.touched) && addressForm.get('Number')?.errors?.['required']"
+                    class="my-alert">
+                    שדה חובה
+                </div>
+            </div>
+            <div>
+                <label for="zipCode">מיקוד: </label>
+                <input id="zipCode" type="text" formControlName="ZipCode">
+                <div *ngIf="addressForm.invalid && (addressForm.dirty || addressForm.touched)" class="my-alert">
+                    <div *ngIf="addressForm.get('ZipCode')?.errors?.['required']">
+                        שדה חובה
+                    </div>
+                    <div *ngIf="addressForm.get('ZipCode')?.errors?.['pattern']">
+                        ספרות בלבד
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('close')">סגירה</button>
+        <button type="button" class="btn btn-outline-primary" (click)="activeModal.close(addressForm.value)" [disabled]="addressForm.invalid || !addressForm.dirty && !addressForm.touched">שמירה</button>
+    </div>
+</div>
