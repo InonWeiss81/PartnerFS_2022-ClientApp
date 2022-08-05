@@ -8,7 +8,7 @@ export const environment = {
   EndPointControllerRoute: 'api/customers/',
   EndPointGetCustomerDataRoute: 'getCustomerData',
   EndPointUpdateCustomerAddressRoute: 'updateCustomerAddress',
-  LoginExpirationMinutes: 1
+  LoginExpirationMinutes: 5
 };
 
 /*
