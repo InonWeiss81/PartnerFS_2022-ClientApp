@@ -7,7 +7,8 @@ export const environment = {
   EndPointBaseUrl: 'https://localhost:44393/',
   EndPointControllerRoute: 'api/customers/',
   EndPointGetCustomerDataRoute: 'getCustomerData',
-  EndPointUpdateCustomerAddressRoute: 'updateCustomerAddress'
+  EndPointUpdateCustomerAddressRoute: 'updateCustomerAddress',
+  LoginExpirationMinutes: 1
 };
 
 /*

@@ -1,6 +1,6 @@
+import { AppService } from './../../app.sevice';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { LoginService } from './login.service';
 import { LoginValidators } from './login.validators';
@@ -32,7 +32,8 @@ export class LoginComponent implements OnInit, OnDestroy {
         else {
           if (this.formSubmitted) {
             sessionStorage.setItem('customerDetails', JSON.stringify(data));
-            this.router.navigate(['/details']);
+            this.appService.startCounting();
+            this.appService.navigateTo('details');
           }
         }
       }
@@ -58,7 +59,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
 
-  constructor(private fb: FormBuilder, private router: Router, private loginService: LoginService) {
+  constructor(private fb: FormBuilder, 
+    private loginService: LoginService, 
+    private appService: AppService) {
     this.loginForm = this.fb.group(this.controlsObject);
   }
 

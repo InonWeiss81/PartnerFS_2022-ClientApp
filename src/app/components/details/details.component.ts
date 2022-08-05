@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { AppService } from './../../app.sevice';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { Address } from 'src/app/models/Address';
@@ -14,7 +14,7 @@ import { DetailsService } from './details.service';
   templateUrl: './details.component.html',
   styleUrls: ['./details.component.scss']
 })
-export class DetailsComponent implements OnInit {
+export class DetailsComponent implements OnInit, OnDestroy {
 
   customer: Customer | undefined;
   selectedContract: Contract | null = null;
@@ -27,7 +27,7 @@ export class DetailsComponent implements OnInit {
       this.customer = JSON.parse(customerFromSS) as Customer;
     }
     else {
-      this.router.navigate(['/login']);
+      this.appService.navigateTo('login');
     }
   }
 
@@ -77,7 +77,13 @@ export class DetailsComponent implements OnInit {
     }
   }
 
+  ngOnDestroy(): void {
+    this.modalRefSub?.unsubscribe();
+  }
   
-  constructor(private router: Router, private modalService: NgbModal, private detailsService: DetailsService) { }
+  constructor(private appService: AppService, 
+    private modalService: NgbModal, 
+    private detailsService: DetailsService) { }
+  
 
 }
